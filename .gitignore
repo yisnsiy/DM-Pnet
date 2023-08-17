@@ -1,0 +1,10 @@
+!*.py
+!readme.md
+!*.ipynb
+
+data/
+logs/
+results/
+.idea/
+.vscode/
+document/
