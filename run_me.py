@@ -5,7 +5,7 @@ import pandas as pd
 from data_access.pnet_data import PnetData
 from model.pnet import Pnet
 from model.train_utils import *
-from config import RESULT_PATH, LOG_PATH, debug, save_res, parameters
+from config import RESULT_PATH, LOG_PATH, debug, save_res, parameters, interpret, gpu_id
 from utils.general import try_gpu, create_data_iterator
 from utils.metrics import Metrics
 from custom import interpret_model
@@ -17,14 +17,8 @@ from torch.optim import lr_scheduler
 from tensorboardX import SummaryWriter
 
 
-# class_weights = {0: 0.7458410351201479, 1: 1.5169172932330828}
-# batch_size = 50
-# epochs = 300
-# penalty = 0.001
 
-# """
-device = try_gpu(7)
-# device = torch.device('cpu')
+device = try_gpu(gpu_id)
 
 results = None
 for p in parameters:
@@ -107,16 +101,17 @@ for p in parameters:
         results = pd.DataFrame(data=data, index=[model_name], columns=col)
     else:
         results.loc[model_name] = res
+    print(res)
 
     # saving model
     if save_res is True:
         filename = join(RESULT_PATH, f'{model_name}_' + 'model.pt')
         torch.save(net, filename)  # save all parameters, feature names must be included, not generate again.
 
-    # explain model
-    if methode_name is not None:
-        torch.save(X_test, join(LOG_PATH, 'input.pt'))
-        interpret_model.run(model_name, X_test, methode_name, baseline)
+        # explain model
+        if methode_name is not None and interpret == True:
+            torch.save(X_test, join(LOG_PATH, 'input.pt'))
+            interpret_model.run(model_name, X_test, methode_name, baseline)
     net.to('cpu')
 
 print(results)

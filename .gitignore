@@ -2,6 +2,7 @@
 !readme.md
 !*.ipynb
 
+*/__pycache__
 data/
 logs/
 results/

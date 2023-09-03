@@ -146,7 +146,7 @@ if __name__ == "__main__":
 
     reactome = Reactome()
 
-    # get mappint relation.
+    # get mapping relation.
     name2id, id2name = get_pathway(reactome)
 
     # get dynamic mask.

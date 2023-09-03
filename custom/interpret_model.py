@@ -1,5 +1,5 @@
 from os.path import join, exists
-from config import RESULT_PATH, REACTOM_PATHWAY_PATH, only_interpret, LOG_PATH
+from config import RESULT_PATH, REACTOM_PATHWAY_PATH, interpret, LOG_PATH
 from data_access.data_access import Data
 from custom.layer_custom import Diagonal
 from custom import sankey
@@ -316,7 +316,7 @@ def run(model_name, X=None, method_name='deeplift', baseline='zero'):
     # model.eval()
 
     #load data_access
-    if only_interpret == True:
+    if interpret == True:
         X = torch.load(join(LOG_PATH, 'input.pt'))
 
     # get neuron contribution by deeplift rescale rule
@@ -328,6 +328,16 @@ def run(model_name, X=None, method_name='deeplift', baseline='zero'):
     link_weights_df = get_link_weights_df_(model, model.feature_names, layer_names)
     print("saving link weights")
     save_link_weights(link_weights_df, layer_names[1:])
+
+    if model.trainable_mask == True:
+        trainable_mask = model.get_submodule('h1').trainable_mask.T.detach().numpy()
+        trainable_mask_df = pd.DataFrame(
+            trainable_mask,
+            index=model.feature_names[layer_names[1]],
+            columns=model.feature_names[layer_names[2]]
+        )
+        trainable_mask_df.to_csv(join(RESULT_PATH, 'extracted/trainable_mask_1.csv'))
+
 
     # get degree of genes
     deg_matrix = get_degrees(link_weights_df, layer_names[1:], model)
@@ -346,4 +356,4 @@ def run(model_name, X=None, method_name='deeplift', baseline='zero'):
 
 
 if __name__ == "__main__":
-    run(model_name='pnet_deeplift', method_name='integratedgradients')
+    run(model_name='pnet_deeplift', method_name='deeplift')

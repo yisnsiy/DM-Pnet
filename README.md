@@ -4,9 +4,10 @@ Followint these steps to local running.
 
 ### Prerequisites
 
-1. Check environments.yaml for list of needed packages.
+1. Check environments.yml for list of needed packages.
 2. Download ```_database``` directory from the [pnet project](https://github.com/marakeby/pnet_prostate_paper) if you need train model and test model. You can store it somewhere else by setting ```DATA_PATH``` variable and change directory name by setting ```data``` in ```config.py``` accordingly.
-3. if you want run experiment 3, please train and explain model first to genarate required file.
+3. if you want run experiment 3 and 5, please train and explain model in ```run_me.py``` first to genarate required file.
+4. Setting up the ```config.py``` for local training and running the ```run_me.py``` generates the Sankey diagram in Experiment 6
 
 ### Installation
 
@@ -17,7 +18,7 @@ Followint these steps to local running.
 
 2. Create environment
     ```sh
-    conda env create --name pnet_pytorch --file=environment.yaml
+    conda env create --name pnet_pytorch --file=environment.yml
     ```
 
 ## Usage

@@ -14,9 +14,9 @@ RESULT_PATH = join(BASE_PATH, 'results')
 # state param
 debug = False  # is it debug mode
 local = False  # is it remote running
-save_train = False  # whether to save the model or not in result path
-save_res = False  # whether to save evaluation of model or not in result path
-only_interpret = False
+save_res = True  # whether to save evaluation of model or not in result path
+interpret = True
+gpu_id = 0
 
 # data param
 selected_genes = 'tcga_prostate_expressed_genes_and_cancer_genes.csv'
@@ -40,6 +40,14 @@ data_params = {
 n_hidden_layers = 5
 base_dropout = 0.5
 loss_weights = [2, 7, 20, 54, 148, 400]
+
+
+# If the mask of model is trained locally, then set trainable_mask to true 
+# and full_train to false.
+
+# If the mask of model is trained globally, then set trainable_mask to true 
+# and full_train to true.
+
 
 models_params = {
     'id': 'pnet',
