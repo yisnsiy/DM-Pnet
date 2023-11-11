@@ -13,7 +13,7 @@ Followint these steps to local running.
 
 1. Clone the repository
     ```sh
-    git clone https://github.com/yisnsiy/pnet_based_on_pytorch.git
+    git clone https://github.com/yisnsiy/DM-Pnet.git
     ```
 
 2. Create environment

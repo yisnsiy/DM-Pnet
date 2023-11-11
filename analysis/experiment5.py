@@ -23,7 +23,7 @@ def get_figure(
     figs = subplots.make_subplots(
         rows=1, 
         cols=3, 
-        subplot_titles=("Overview", "Mixture", "New")
+        subplot_titles=("Overview", "Mixture", "Global training")
     )
 
     figs.add_trace(
